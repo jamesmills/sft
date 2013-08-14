@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <p>
+        Hello {{ name }}
+        <br><br>
+        You are on {{ url('greet', {'name': name }) }}
+    </p>
+
+    <p>
+        Also <a href="{{ path('greet', {'name': 'Albert'}) }}">greet Albert</a>
+    </p>
+
+    <p>
+        <h2>Commends</h2>
+        {{ render(controller('SensioTrainingBundle:Default:comments')) }}
+    </p>
+
+
+{%  endblock %}

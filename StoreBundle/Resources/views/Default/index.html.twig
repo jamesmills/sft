@@ -1,0 +1,100 @@
+{% extends "::base.html.twig" %}
+
+{% form_theme form "form_table_layout.html.twig" %}
+
+{% block body %}
+
+    <h1>New Quotation</h1>
+
+    <form action="{{ url('new_quotation') }}" novalidate="novalidate" method="post" {{ form_enctype(form) }}>
+
+        <fieldset>
+
+            <legend>Customer</legend>
+
+            <table id="customer">
+                {% for field in form.customer %}
+                {{ form_row(field) }}
+                {% endfor %}
+            </table>
+
+        </fieldset>
+
+        <fieldset>
+
+            <legend>Quotation</legend>
+
+            <table id="quotation">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Designation</th>
+                        <th>unit Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for key, entry in form.entries %}
+                    <tr>
+                        <td>{{ (key +1) }}</td>
+                        <td>{{ form_widget(entry.designation) }}</td>
+                        <td>{{ form_widget(entry.unitPrice) }}</td>
+                        <td>{{ form_widget(entry.quantity, {'attr': {'size': 5}}) }}</td>
+                    </tr>
+
+                    {% set errors = 0 %}
+                    {% for field in entry %}
+                        {% set errors = errors + field.vars.errors|length %}
+                    {% endfor %}
+
+                    {% if errors > 0 %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>{{ form_errors(entry.designation) }}</td>
+                            <td>{{ form_errors(entry.unitPrice) }}</td>
+                            <td>{{ form_errors(entry.quantity) }}</td>
+                        </tr>
+                    {% endif%}
+                {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2" style="text-align: right">
+                            {{ form_label(form.amount) }}
+                            {{ form_errors(form.amount) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form.amount) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: right">
+                            {{ form_label(form.vat) }}
+                            {{ form_errors(form.vat) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form.vat) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: right">
+                            {{ form_label(form.total) }}
+                            {{ form_errors(form.total) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form.total) }}
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </fieldset>
+
+        {{ form_rest(form) }}
+
+    </form>
+
+{% endblock %}
