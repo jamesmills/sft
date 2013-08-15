@@ -14,6 +14,14 @@ class QuotationType extends AbstractType
     {
         $builder
             ->add('customer', new CustomerType())
+            ->add(
+                'document',
+                'file',
+                array(
+                    'required' => false,
+                    'label' => 'Add a PDF version'
+                )
+            )
             ->add('amount', 'text')
             ->add(
                 'entries',

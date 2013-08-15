@@ -3,6 +3,7 @@
 namespace Sensio\StoreBundle\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Quotation
@@ -15,6 +16,11 @@ class Quotation
 
     /** @Assert\Valid() */
     private $customer;
+
+    /**
+     * @Assert\File(mimeTypes={"application/pdf" })
+     */
+    private $document;
 
     /**
      * @Assert\NotBlank()
@@ -50,6 +56,24 @@ class Quotation
             )
         );
     }
+
+    /**
+     * @param mixed $document
+     */
+    public function setDocument(UploadedFile $document)
+    {
+        $this->document = $document;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+
 
     public function getRecipient()
     {

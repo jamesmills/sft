@@ -38,6 +38,15 @@ class DefaultController extends Controller
                 ->setSubject('[Sensio Store] your quotation')
                 ->setBody($body);
 
+            if ($document = $quotation->getDocument()) {
+                $file = \Swift_Attachment::fromPath(
+                    $document->getPathname(),
+                    $document->getClientMimeType()
+                );
+                $file->setFilename('quote_' . date('Y-m-d') . '.pdf');
+                $message->attach($file);
+            }
+
             $this->get('mailer')->send($message);
 
             return $this->redirect($this->generateUrl('quotation_success'));
