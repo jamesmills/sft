@@ -1,0 +1,9 @@
+{{ '{% extends "::base.html.twig" %}' }}
+
+{{ '{% block title %}' -}}
+{{ controller }} - {{ action.basename }}
+{{- '{% endblock %}' }}
+
+{{ '{% block body %}' }}
+<h1>Welcome to the {{ controller }} brother!</h1>
+{{ '{% endblock %}' }}
